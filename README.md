@@ -1,6 +1,6 @@
-# coronavirusrestapiflutter
+# Corona virus rest API with Flutter
 
-Covid-19 API app test
+App created with Flutter that receives informations from a Covid-19 API
 
 Instructor Andrea Bizzotto by Udemy
 
