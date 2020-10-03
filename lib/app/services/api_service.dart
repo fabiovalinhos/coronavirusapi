@@ -33,7 +33,7 @@ class APIService {
     final uri = api.endpointUri(endpoint);
     final response = await http.get(
       uri.toString(),
-      headers: {'Authorization': 'Bearer $accessToken'},
+      headers: {'Authorization': 'Bearer ${accessToken}'},
     );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);

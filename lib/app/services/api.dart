@@ -24,8 +24,9 @@ class API {
         path: 'token',
       );
 
+//  Poderia fazer um arrow function como acima, sem return
   Uri endpointUri(EndPoint endpoint) {
-    Uri(
+    return Uri(
       scheme: 'https',
       host: host,
       path: _paths[endpoint],
