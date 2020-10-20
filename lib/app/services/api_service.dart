@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:coronavirusrestapiflutter/app/services/api.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'endpoint_data.dart';
 
 class APIService {
   final API api;
@@ -26,7 +28,7 @@ class APIService {
     throw response;
   }
 
-  Future<int> getEndPointData({
+  Future<EndpointData> getEndPointData({
     @required String accessToken,
     @required EndPoint endpoint,
   }) async {
@@ -40,9 +42,11 @@ class APIService {
       if (data.isNotEmpty) {
         final Map<String, dynamic> endPointData = data[0];
         final String responseJsonKey = _responseJsonKeys[endpoint];
-        final int result = endPointData[responseJsonKey];
-        if (result != null) {
-          return result;
+        final int value = endPointData[responseJsonKey];
+        final String dateString = endPointData['date'];
+        final date = DateTime.tryParse(dateString);
+        if (value != null) {
+          return EndpointData(value: value, date: date);
         }
       }
     }
