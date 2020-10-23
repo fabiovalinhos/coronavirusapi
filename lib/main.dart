@@ -1,12 +1,16 @@
 import 'package:coronavirusrestapiflutter/app/repositories/data_repository.dart';
 import 'package:coronavirusrestapiflutter/app/ui/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'app/services/api.dart';
 import 'app/services/api_service.dart';
 
-void main() {
+void main() async {
+  Intl.defaultLocale = "pt_BR";
+  await initializeDateFormatting();
   runApp(MyApp());
 }
 
