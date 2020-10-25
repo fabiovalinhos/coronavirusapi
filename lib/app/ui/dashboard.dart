@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:coronavirusrestapiflutter/app/repositories/data_repository.dart';
 import 'package:coronavirusrestapiflutter/app/repositories/endpoins_data.dart';
 import 'package:coronavirusrestapiflutter/app/services/api.dart';
 import 'package:coronavirusrestapiflutter/app/ui/endpoint_card.dart';
 import 'package:coronavirusrestapiflutter/app/ui/last_updated_status_text.dart';
+import 'package:coronavirusrestapiflutter/app/ui/show_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,9 +24,18 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Future<void> _updateData() async {
-    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    final endpointsData = await dataRepository.getAllEndpointsData();
-    setState(() => _endpointsData = endpointsData);
+    try {
+      final dataRepository =
+          Provider.of<DataRepository>(context, listen: false);
+      final endpointsData = await dataRepository.getAllEndpointsData();
+      setState(() => _endpointsData = endpointsData);
+    } on SocketException catch (_) {
+      await showAlertDialog(
+          context: context,
+          title: 'Connection Error',
+          content: 'Could not retrieve data. Please try again later',
+          defaultActionText: 'Ok');
+    }
   }
 
   @override
