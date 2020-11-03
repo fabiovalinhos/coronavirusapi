@@ -8,6 +8,7 @@ import 'package:coronavirusrestapiflutter/app/ui/last_updated_status_text.dart';
 import 'package:coronavirusrestapiflutter/app/ui/show_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -20,6 +21,8 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    _endpointsData = dataRepository.getAllEndpointsCachedData();
     _updateData();
   }
 
@@ -30,11 +33,19 @@ class _DashboardState extends State<Dashboard> {
       final endpointsData = await dataRepository.getAllEndpointsData();
       setState(() => _endpointsData = endpointsData);
     } on SocketException catch (_) {
-      await showAlertDialog(
-          context: context,
-          title: 'Connection Error',
-          content: 'Could not retrieve data. Please try again later',
-          defaultActionText: 'Ok');
+      showAlertDialog(
+        context: context,
+        title: 'Connection Error',
+        content: 'Could not retrieve data. Please try again later',
+        defaultActionText: 'Ok',
+      );
+    } catch (_) {
+      showAlertDialog(
+        context: context,
+        title: 'Unknown Error',
+        content: 'Please contact support or try again later.',
+        defaultActionText: 'Ok',
+      );
     }
   }
 
