@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 class DataRepository {
   final APIService apiService;
   final DataCacheService dataCacheService;
-  DataRepository({@required this.apiService, this.dataCacheService});
+  DataRepository({@required this.apiService, @required this.dataCacheService});
 
   String _accessToken;
 
